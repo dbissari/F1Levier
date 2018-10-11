@@ -15,6 +15,9 @@ public class Team extends RealmObject {
 
     private RealmList<Participant> members;
 
+    public Team() {
+    }
+
     public Team(String name) {
         this.name = name;
     }

@@ -8,6 +8,9 @@ public class Level extends RealmObject {
 
     private int echelon;
 
+    public Level() {
+    }
+
     public Level(String name, int echelon) {
         this.name = name;
         this.echelon = echelon;

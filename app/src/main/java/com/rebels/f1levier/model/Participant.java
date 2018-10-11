@@ -19,6 +19,9 @@ public class Participant extends RealmObject {
     @LinkingObjects("members")
     private final RealmResults<Team> teams = null;
 
+    public Participant() {
+    }
+
     public Participant(String name) {
         this.name = name;
     }
