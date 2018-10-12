@@ -22,8 +22,9 @@ public class Participant extends RealmObject {
     public Participant() {
     }
 
-    public Participant(String name) {
+    public Participant(String name, Level level) {
         this.name = name;
+        this.level = level;
     }
 
     @Override
