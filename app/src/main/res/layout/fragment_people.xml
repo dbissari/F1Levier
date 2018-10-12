@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.PeopleFragment">
+    tools:context=".ui.home.PeopleFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:id="@+id/button_teams"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="136dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="32dp"
+        android:onClick="launchTeamsActivity"
+        android:text="@string/teams"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button_participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="119dp"
+        android:layout_marginStart="119dp"
+        android:onClick="launchParticipantsActivity"
+        android:text="@string/participants"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_teams" />
+
+    <Button
+        android:id="@+id/button_levels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="136dp"
+        android:layout_marginStart="136dp"
+        android:onClick="launchLevelsActivity"
+        android:text="@string/levels"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_participants" />
+
+</android.support.constraint.ConstraintLayout>
