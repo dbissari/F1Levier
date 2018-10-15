@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.rebels.f1levier.ui.participants.ParticipantsFragment"
+    android:name="com.rebels.f1levier.ui.levels.LevelsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.participants.ParticipantsFragment"
-    tools:listitem="@layout/row_participant" />
+    tools:context=".ui.levels.LevelsFragment"
+    tools:listitem="@layout/row_level" />

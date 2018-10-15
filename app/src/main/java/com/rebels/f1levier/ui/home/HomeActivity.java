@@ -9,8 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.rebels.f1levier.R;
+import com.rebels.f1levier.model.Level;
+import com.rebels.f1levier.model.Participant;
+import com.rebels.f1levier.model.Team;
+import com.rebels.f1levier.ui.levels.LevelsFragment;
+import com.rebels.f1levier.ui.participants.ParticipantsFragment;
+import com.rebels.f1levier.ui.runs.RunsFragment;
+import com.rebels.f1levier.ui.teams.TeamsFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements LevelsFragment.OnListFragmentInteractionListener, TeamsFragment.OnListFragmentInteractionListener, ParticipantsFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -25,10 +32,10 @@ public class HomeActivity extends AppCompatActivity {
                     showFragment(new ParticipantsFragment());
                     return true;
                 case R.id.navigation_teams:
-                    // TODO : show teams fragment
+                    showFragment(new TeamsFragment());
                     return true;
                 case R.id.navigation_levels:
-                    // TODO : show levels fragment
+                    showFragment(new LevelsFragment());
                     return true;
             }
             return false;
@@ -53,4 +60,18 @@ public class HomeActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public void onListFragmentInteraction(Level level) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Team team) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Participant participant) {
+
+    }
 }
