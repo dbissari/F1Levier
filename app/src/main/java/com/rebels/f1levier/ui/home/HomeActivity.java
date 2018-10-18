@@ -13,9 +13,8 @@ import com.rebels.f1levier.model.Team;
 import com.rebels.f1levier.ui.levels.LevelsFragment;
 import com.rebels.f1levier.ui.participants.ParticipantsFragment;
 import com.rebels.f1levier.ui.runs.RunsFragment;
-import com.rebels.f1levier.ui.teams.TeamsFragment;
 
-public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnListFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -28,9 +27,6 @@ public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnL
                     return true;
                 case R.id.navigation_participants:
                     showFragment(new ParticipantsFragment());
-                    return true;
-                case R.id.navigation_teams:
-                    showFragment(new TeamsFragment());
                     return true;
                 case R.id.navigation_levels:
                     showFragment(new LevelsFragment());
@@ -56,10 +52,5 @@ public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnL
         fragmentManager.beginTransaction()
                 .replace(R.id.content, fragment)
                 .commit();
-    }
-
-    @Override
-    public void onListFragmentInteraction(Team team) {
-
     }
 }
