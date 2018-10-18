@@ -3,6 +3,7 @@ package com.rebels.f1levier.ui.levels;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,24 +15,26 @@ import android.view.ViewGroup;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.model.Level;
+import com.rebels.f1levier.repository.LevelRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import io.realm.Realm;
 
 /**
  * A fragment representing a list of Items.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link FragmentInteractionListener}
  * interface.
  */
 public class LevelsFragment extends Fragment {
 
     private int mColumnCount = 1;
 
-    private OnListFragmentInteractionListener mListener;
+    private FragmentInteractionListener mListener;
 
-    private List<Level> mLevels;
+    private Realm mRealm;
+    private LevelRepository mRepository;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,7 +47,9 @@ public class LevelsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLevels = new ArrayList<>();
+        mRealm = Realm.getDefaultInstance();
+        mRepository = new LevelRepository(mRealm);
+        mListener = new LevelsListener(getActivity());
     }
 
     @Override
@@ -53,52 +58,39 @@ public class LevelsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_levels, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new LevelsRecyclerViewAdapter(mLevels, mListener));
-
-            DividerItemDecoration itemDecoration = new DividerItemDecoration(
-                    Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL);
-            recyclerView.addItemDecoration(itemDecoration);
+        Context context = view.getContext();
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        recyclerView.setAdapter(new LevelsRecyclerViewAdapter(mRepository.getAll(), mListener));
+
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(
+                Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
+
+        // Set the fab listener
+        FloatingActionButton fab = view.findViewById(R.id.fab_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onFabClicked();
+            }
+        });
+
         return view;
     }
 
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Level level);
+    public interface FragmentInteractionListener {
+        void onItemClicked(Level level);
+        void onFabClicked();
     }
 }

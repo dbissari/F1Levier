@@ -17,7 +17,7 @@ import com.rebels.f1levier.ui.participants.ParticipantsFragment;
 import com.rebels.f1levier.ui.runs.RunsFragment;
 import com.rebels.f1levier.ui.teams.TeamsFragment;
 
-public class HomeActivity extends AppCompatActivity implements LevelsFragment.OnListFragmentInteractionListener, TeamsFragment.OnListFragmentInteractionListener, ParticipantsFragment.OnListFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnListFragmentInteractionListener, ParticipantsFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -58,11 +58,6 @@ public class HomeActivity extends AppCompatActivity implements LevelsFragment.On
         fragmentManager.beginTransaction()
                 .replace(R.id.content, fragment)
                 .commit();
-    }
-
-    @Override
-    public void onListFragmentInteraction(Level level) {
-
     }
 
     @Override

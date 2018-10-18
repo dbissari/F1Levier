@@ -20,7 +20,7 @@ public class Level extends RealmObject {
     public String toString() {
         return "Level{" +
                 "name=" + name +
-                "echelon=" + echelon +
+                ",echelon=" + echelon +
                 '}';
     }
 
