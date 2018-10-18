@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,15 +20,7 @@ import java.util.Objects;
 
 import io.realm.Realm;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link FragmentInteractionListener}
- * interface.
- */
 public class LevelsFragment extends Fragment {
-
-    private int mColumnCount = 1;
 
     private FragmentInteractionListener mListener;
 
@@ -57,16 +48,13 @@ public class LevelsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_levels, container, false);
 
-        // Set the adapter
+        // Set the layout and the adapter
         Context context = view.getContext();
         RecyclerView recyclerView = view.findViewById(R.id.list);
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new LevelsRecyclerViewAdapter(mRepository.getAll(), mListener));
 
+        // Set the divider
         DividerItemDecoration itemDecoration = new DividerItemDecoration(
                 Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);

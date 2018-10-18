@@ -9,7 +9,7 @@ public class LevelsListener implements LevelsFragment.FragmentInteractionListene
     private FragmentActivity mActivity;
 
     LevelsListener(FragmentActivity activity) {
-        this.mActivity = activity;
+        mActivity = activity;
     }
 
     @Override
@@ -20,6 +20,6 @@ public class LevelsListener implements LevelsFragment.FragmentInteractionListene
     @Override
     public void onFabClicked() {
         NewLevelDialog newLevelDialog = new NewLevelDialog();
-        newLevelDialog.show(mActivity.getSupportFragmentManager(), "New Level Dialog");
+        newLevelDialog.show(mActivity.getSupportFragmentManager(), null);
     }
 }

@@ -1,8 +1,14 @@
 package com.rebels.f1levier.model;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Level extends RealmObject {
+
+    @PrimaryKey
+    private String id = UUID.randomUUID().toString();
 
     private String name;
 
@@ -18,10 +24,22 @@ public class Level extends RealmObject {
 
     @Override
     public String toString() {
+        /*
         return "Level{" +
-                "name=" + name +
+                "id=" + id +
+                ",name=" + name +
                 ",echelon=" + echelon +
                 '}';
+        */
+        return name + " (" + echelon + ")";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getEchelon() {

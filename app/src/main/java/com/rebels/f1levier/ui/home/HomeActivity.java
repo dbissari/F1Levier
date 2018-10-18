@@ -9,15 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.model.Level;
-import com.rebels.f1levier.model.Participant;
 import com.rebels.f1levier.model.Team;
 import com.rebels.f1levier.ui.levels.LevelsFragment;
 import com.rebels.f1levier.ui.participants.ParticipantsFragment;
 import com.rebels.f1levier.ui.runs.RunsFragment;
 import com.rebels.f1levier.ui.teams.TeamsFragment;
 
-public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnListFragmentInteractionListener, ParticipantsFragment.OnListFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnListFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -47,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         showFragment(new RunsFragment());
@@ -62,11 +60,6 @@ public class HomeActivity extends AppCompatActivity implements TeamsFragment.OnL
 
     @Override
     public void onListFragmentInteraction(Team team) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(Participant participant) {
 
     }
 }

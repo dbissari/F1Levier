@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Level} and makes a call to the
- * specified {@link LevelsFragment.FragmentInteractionListener}.
+ * specified {@link FragmentInteractionListener}.
  */
 public class LevelsRecyclerViewAdapter extends RecyclerView.Adapter<LevelsRecyclerViewAdapter.ViewHolder> {
 
@@ -66,8 +66,8 @@ public class LevelsRecyclerViewAdapter extends RecyclerView.Adapter<LevelsRecycl
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mTextViewName = (TextView) view.findViewById(R.id.text_view_level_name);
-            mTextViewEchelon = (TextView) view.findViewById(R.id.text_view_level_echelon);
+            mTextViewName = view.findViewById(R.id.text_view_level_name);
+            mTextViewEchelon = view.findViewById(R.id.text_view_level_echelon);
         }
 
         @Override

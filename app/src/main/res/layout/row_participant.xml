@@ -11,7 +11,7 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/text_view_name"
+        android:id="@+id/text_view_participant_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
@@ -19,7 +19,7 @@
         android:textColor="@android:color/black" />
 
     <TextView
-        android:id="@+id/text_view_level"
+        android:id="@+id/text_view_participant_level"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/darker_gray"

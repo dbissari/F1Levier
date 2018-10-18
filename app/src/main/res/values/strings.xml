@@ -7,11 +7,14 @@
     <string name="title_teams">Teams</string>
     <string name="title_levels">Levels</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="level_name">Level name</string>
     <string name="level_echelon">Level echelon</string>
     <string name="title_new_level">New Level</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
+    <string name="participant_name">Participant name</string>
+    <string name="title_new_participant">New participant</string>
+    <string name="participant_level">Participant level</string>
 </resources>

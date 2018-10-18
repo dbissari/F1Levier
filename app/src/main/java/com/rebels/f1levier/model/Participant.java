@@ -29,12 +29,14 @@ public class Participant extends RealmObject {
 
     @Override
     public String toString() {
+        /*
         return "Participant{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", level=" + level.getName() +
-                // TODO : Add team
+                "id=" + id +
+                ",name=" + name +
+                ",level=" + level.getName() +
                 '}';
+        */
+        return name + " (" + level.getName() + ")";
     }
 
     public String getId() {

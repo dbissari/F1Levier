@@ -4,15 +4,13 @@ import android.support.annotation.NonNull;
 
 import com.rebels.f1levier.model.Level;
 
-import java.util.List;
-
 import io.realm.Realm;
+import io.realm.RealmResults;
 
-public class LevelRepository {
-    private Realm mRealm;
+public class LevelRepository extends Repository {
 
     public LevelRepository(Realm realm) {
-        mRealm = realm;
+        super(realm);
     }
 
     public void add(final Level level) {
@@ -24,7 +22,14 @@ public class LevelRepository {
         });
     }
 
-    public List<Level> getAll() {
-        return mRealm.where(Level.class).findAll();
+    public RealmResults<Level> getAll() {
+        return mRealm.where(Level.class)
+                .findAll();
+    }
+
+    public Level get(String id) {
+        return mRealm.where(Level.class)
+                .equalTo("id", id)
+                .findFirst();
     }
 }
