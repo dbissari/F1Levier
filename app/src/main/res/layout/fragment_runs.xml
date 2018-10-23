@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/fragments_horizontal_margin"
+    android:layout_marginEnd="@dimen/fragments_horizontal_margin"
+    android:name="com.rebels.f1levier.ui.runs.RunsFragment"
     tools:context=".ui.runs.RunsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <at.markushi.ui.CircleButton
+        android:layout_width="220dip"
+        android:layout_height="220dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:id="@+id/button_new_run"
+        android:src="@drawable/ic_timer_white_180dp"
+        app:cb_color="@color/colorPrimary"
+        app:cb_pressedRingWidth="10dip" />
 
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

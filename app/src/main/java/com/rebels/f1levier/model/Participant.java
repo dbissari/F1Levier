@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
@@ -15,6 +16,9 @@ public class Participant extends RealmObject {
     private String name;
 
     private Level level;
+
+    @Ignore
+    private boolean checked = false;
 
     @LinkingObjects("members")
     private final RealmResults<Team> teams = null;
@@ -65,5 +69,13 @@ public class Participant extends RealmObject {
 
     public RealmResults<Team> getTeams() {
         return teams;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

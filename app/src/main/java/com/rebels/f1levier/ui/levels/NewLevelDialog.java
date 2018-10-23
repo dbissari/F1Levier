@@ -60,6 +60,8 @@ public class NewLevelDialog extends AppCompatDialogFragment {
                         final String levelName = editTextName.getText().toString().trim();
                         final String levelEchelon = editTextEchelon.getText().toString().trim();
 
+                        // TODO : Validate form
+
                         mRepository.add(new Level(levelName, Integer.valueOf(levelEchelon)));
                     }
                 });

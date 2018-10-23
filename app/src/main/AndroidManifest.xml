@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.participants.ParticipantsActivity"
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".ui.run.RunActivity"
+            android:parentActivityName=".ui.home.HomeActivity" />
     </application>
 
 </manifest>

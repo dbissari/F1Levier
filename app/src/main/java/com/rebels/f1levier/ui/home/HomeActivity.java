@@ -9,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.model.Team;
 import com.rebels.f1levier.ui.levels.LevelsFragment;
-import com.rebels.f1levier.ui.participants.ParticipantsFragment;
 import com.rebels.f1levier.ui.runs.RunsFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -24,9 +22,6 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_runs:
                     showFragment(new RunsFragment());
-                    return true;
-                case R.id.navigation_participants:
-                    showFragment(new ParticipantsFragment());
                     return true;
                 case R.id.navigation_levels:
                     showFragment(new LevelsFragment());

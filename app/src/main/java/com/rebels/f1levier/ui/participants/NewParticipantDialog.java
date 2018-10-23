@@ -69,6 +69,8 @@ public class NewParticipantDialog extends AppCompatDialogFragment {
                         final String participantName = editTextName.getText().toString().trim();
                         final Level participantLevel = (Level) spinnerLevel.getSelectedItem();
 
+                        // TODO : Validate form
+
                         mRepository.add(new Participant(participantName, participantLevel));
                     }
                 });

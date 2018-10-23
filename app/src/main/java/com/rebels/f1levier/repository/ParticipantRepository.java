@@ -27,4 +27,10 @@ public class ParticipantRepository extends Repository {
         return mRealm.where(Participant.class)
                 .findAll();
     }
+
+    public RealmResults<Participant> getAllByIds(final String[] ids) {
+        return mRealm.where(Participant.class)
+                .in("id", ids)
+                .findAll();
+    }
 }
