@@ -11,10 +11,10 @@ import java.util.List;
 
 @Dao
 public interface ParticipantDao {
-    @Query("SELECT * FROM participant")
+    @Query("SELECT * FROM participant ORDER BY name")
     LiveData<List<ParticipantEntity>> getAll();
 
-    @Query("SELECT * FROM participant WHERE id IN (:ids)")
+    @Query("SELECT * FROM participant WHERE id IN (:ids) ORDER BY name")
     List<ParticipantEntity> getAllByIds(final int[] ids);
 
     @Query("SELECT * FROM participant WHERE id = :id")

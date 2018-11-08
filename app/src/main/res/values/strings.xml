@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">F1Levier</string>
+    <string name="title_participants">Participants</string>
+    <string name="participant_name">Name</string>
+    <string name="participant_echelon">Echelon</string>
+    <string name="title_new_participant">New participant</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="title_races">Races</string>
 </resources>

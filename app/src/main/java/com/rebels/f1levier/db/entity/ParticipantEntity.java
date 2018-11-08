@@ -15,5 +15,5 @@ public class ParticipantEntity {
     public String name;
 
     @NonNull
-    public int level;
+    public int echelon;
 }

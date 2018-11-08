@@ -9,13 +9,13 @@ import com.rebels.f1levier.repository.ParticipantRepository;
 
 import java.util.List;
 
-public class ParticipantListViewModel extends AndroidViewModel {
+public class ParticipantViewModel extends AndroidViewModel {
 
     private ParticipantRepository mRepository;
 
     private LiveData<List<ParticipantEntity>> mAllParticipants;
 
-    public ParticipantListViewModel (Application application) {
+    public ParticipantViewModel(Application application) {
         super(application);
         mRepository = new ParticipantRepository(application);
         mAllParticipants = mRepository.getAllParticipants();
