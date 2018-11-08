@@ -1,24 +1,25 @@
 package com.rebels.f1levier.db.dao;
 
-import com.rebels.f1levier.db.entities.Participant;
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
+import com.rebels.f1levier.db.entity.ParticipantEntity;
 
 import java.util.List;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
 
 @Dao
 public interface ParticipantDao {
     @Query("SELECT * FROM participant")
-    List<Participant> getAll();
+    LiveData<List<ParticipantEntity>> getAll();
 
     @Query("SELECT * FROM participant WHERE id IN (:ids)")
-    List<Participant> getAllByIds(final int[] ids);
+    List<ParticipantEntity> getAllByIds(final int[] ids);
 
     @Query("SELECT * FROM participant WHERE id = :id")
-    Participant getById(final int id);
+    ParticipantEntity getById(final int id);
 
     @Insert
-    void insert(Participant participant);
+    void insert(ParticipantEntity participantEntity);
 }

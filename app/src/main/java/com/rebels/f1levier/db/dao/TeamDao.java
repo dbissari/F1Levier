@@ -1,19 +1,19 @@
 package com.rebels.f1levier.db.dao;
 
-import com.rebels.f1levier.db.entities.Team;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
+import com.rebels.f1levier.db.entity.TeamEntity;
 
 import java.util.List;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
 
 @Dao
 public interface TeamDao {
 
     @Query("SELECT * FROM team WHERE race_id = :raceId")
-    List<Team> getByRace(final int raceId);
+    List<TeamEntity> getAllByRaceId(final int raceId);
 
     @Insert
-    void insert(Team team);
+    void insert(TeamEntity teamEntity);
 }

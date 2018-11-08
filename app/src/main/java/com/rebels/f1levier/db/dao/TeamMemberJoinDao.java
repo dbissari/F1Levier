@@ -1,21 +1,21 @@
 package com.rebels.f1levier.db.dao;
 
-import com.rebels.f1levier.db.entities.Participant;
-import com.rebels.f1levier.db.entities.TeamMemberJoin;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.Query;
+
+import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.TeamMemberJoinEntity;
 
 import java.util.List;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
 
 @Dao
 public interface TeamMemberJoinDao {
 
-    @Query("SELECT * FROM participant p INNER JOIN team_member_join j ON" +
-            "p.id = j.member_id WHERE j.team_id = :teamId")
-    List<Participant> getMembersByTeam(final int teamId);
+    @Query("SELECT * FROM participant INNER JOIN team_member ON " +
+            "participant.id = team_member.member_id WHERE team_member.team_id = :teamId")
+    List<ParticipantEntity> getMembersByTeamId(final int teamId);
 
     @Insert
-    void insertAll(TeamMemberJoin teamMemberJoins);
+    void insertAll(TeamMemberJoinEntity teamMemberJoinsEntity);
 }
