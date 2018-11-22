@@ -5,21 +5,21 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 
 import java.util.List;
 
 @Dao
 public interface ParticipantDao {
-    @Query("SELECT * FROM participant ORDER BY name")
-    LiveData<List<ParticipantEntity>> getAll();
+    @Query("SELECT * FROM Participant ORDER BY name")
+    LiveData<List<Participant>> getAll();
 
-    @Query("SELECT * FROM participant WHERE id IN (:ids) ORDER BY name")
-    List<ParticipantEntity> getAllByIds(final int[] ids);
+    @Query("SELECT * FROM Participant WHERE id IN (:ids) ORDER BY name")
+    List<Participant> getAllByIds(final int[] ids);
 
-    @Query("SELECT * FROM participant WHERE id = :id")
-    ParticipantEntity getById(final int id);
+    @Query("SELECT * FROM Participant WHERE id = :id")
+    Participant getById(final int id);
 
     @Insert
-    void insert(ParticipantEntity participantEntity);
+    void insert(Participant... participants);
 }

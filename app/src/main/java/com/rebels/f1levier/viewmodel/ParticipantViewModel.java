@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.repository.ParticipantRepository;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ParticipantViewModel extends AndroidViewModel {
 
     private ParticipantRepository mRepository;
 
-    private LiveData<List<ParticipantEntity>> mAllParticipants;
+    private LiveData<List<Participant>> mAllParticipants;
 
     public ParticipantViewModel(Application application) {
         super(application);
@@ -21,10 +21,11 @@ public class ParticipantViewModel extends AndroidViewModel {
         mAllParticipants = mRepository.getAllParticipants();
     }
 
-    public LiveData<List<ParticipantEntity>> getAllParticipants() {
+    public LiveData<List<Participant>> getAllParticipants() {
         return mAllParticipants;
     }
-    public void insert(ParticipantEntity participant) {
+
+    public void insert(Participant participant) {
         mRepository.insert(participant);
     }
 }

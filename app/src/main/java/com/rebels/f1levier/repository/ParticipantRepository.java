@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 
 import com.rebels.f1levier.db.AppDatabase;
 import com.rebels.f1levier.db.dao.ParticipantDao;
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class ParticipantRepository {
 
     private ParticipantDao mParticipantDao;
 
-    private LiveData<List<ParticipantEntity>> mAllParticipants;
+    private LiveData<List<Participant>> mAllParticipants;
 
     public ParticipantRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
@@ -22,15 +22,15 @@ public class ParticipantRepository {
         mAllParticipants = mParticipantDao.getAll();
     }
 
-    public LiveData<List<ParticipantEntity>> getAllParticipants() {
+    public LiveData<List<Participant>> getAllParticipants() {
         return mAllParticipants;
     }
 
-    public void insert(ParticipantEntity participantEntity) {
-        new insertAsyncTask(mParticipantDao).execute(participantEntity);
+    public void insert(Participant participant) {
+        new insertAsyncTask(mParticipantDao).execute(participant);
     }
 
-    private static class insertAsyncTask extends AsyncTask<ParticipantEntity, Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<Participant, Void, Void> {
 
         private ParticipantDao mAsyncTaskDao;
 
@@ -39,7 +39,7 @@ public class ParticipantRepository {
         }
 
         @Override
-        protected Void doInBackground(final ParticipantEntity... params) {
+        protected Void doInBackground(final Participant... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }

@@ -8,10 +8,10 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "team",
-        foreignKeys = { @ForeignKey(entity = RaceEntity.class,
+        foreignKeys = { @ForeignKey(entity = Race.class,
                 parentColumns = "id",
                 childColumns = "race_id")})
-public class TeamEntity {
+public class Team {
 
     @PrimaryKey(autoGenerate = true)
     public int id;

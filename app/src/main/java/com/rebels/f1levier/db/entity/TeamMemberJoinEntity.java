@@ -8,10 +8,10 @@ import android.arch.persistence.room.ForeignKey;
 @Entity(tableName = "team_member",
         primaryKeys = { "team_id", "member_id" },
         foreignKeys = {
-                @ForeignKey(entity = TeamEntity.class,
+                @ForeignKey(entity = Team.class,
                         parentColumns = "id",
                         childColumns = "team_id"),
-                @ForeignKey(entity = ParticipantEntity.class,
+                @ForeignKey(entity = Participant.class,
                         parentColumns = "id",
                         childColumns = "member_id")
         })

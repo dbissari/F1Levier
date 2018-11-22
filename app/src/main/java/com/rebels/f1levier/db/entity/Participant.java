@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 
 @Entity(tableName = "participant")
-public class ParticipantEntity {
+public class Participant {
 
     @PrimaryKey(autoGenerate = true)
     public int id;

@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.viewmodel.ParticipantViewModel;
 
 import java.util.List;
@@ -45,9 +45,9 @@ public class ParticipantFragment extends Fragment {
 
         ParticipantViewModel participantViewModel = ViewModelProviders.of(this).get(ParticipantViewModel.class);
         participantViewModel.getAllParticipants().observe(this,
-                new Observer<List<ParticipantEntity>>() {
+                new Observer<List<Participant>>() {
             @Override
-            public void onChanged(@Nullable final List<ParticipantEntity> participants) {
+            public void onChanged(@Nullable final List<Participant> participants) {
                 adapter.setParticipants(participants);
             }
         });

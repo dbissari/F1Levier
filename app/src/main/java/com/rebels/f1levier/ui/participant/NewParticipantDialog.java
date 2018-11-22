@@ -14,7 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.viewmodel.ParticipantViewModel;
 
 import java.util.Objects;
@@ -63,7 +63,7 @@ public class NewParticipantDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ParticipantEntity participant = new ParticipantEntity();
+                        Participant participant = new Participant();
                         participant.name = nameEditText.getText().toString().trim();
                         participant.echelon = echelonSeekBar.getProgress();
 

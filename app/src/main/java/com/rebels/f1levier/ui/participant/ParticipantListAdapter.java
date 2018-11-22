@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.db.entity.ParticipantEntity;
+import com.rebels.f1levier.db.entity.Participant;
 
 import java.util.Collections;
 import java.util.List;
 
 public class ParticipantListAdapter extends RecyclerView.Adapter<ParticipantListAdapter.ViewHolder> {
 
-    private List<ParticipantEntity> mParticipants = Collections.emptyList();
+    private List<Participant> mParticipants = Collections.emptyList();
 
     ParticipantListAdapter() {
     }
@@ -29,12 +29,12 @@ public class ParticipantListAdapter extends RecyclerView.Adapter<ParticipantList
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final ParticipantEntity currentParticipant = mParticipants.get(position);
+        final Participant currentParticipant = mParticipants.get(position);
         holder.nameTextView.setText(currentParticipant.name);
         holder.echelonTextView.setText(String.valueOf(currentParticipant.echelon));
     }
 
-    void setParticipants(List<ParticipantEntity> participants) {
+    void setParticipants(List<Participant> participants) {
         mParticipants = participants;
         notifyDataSetChanged();
     }
