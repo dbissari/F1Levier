@@ -21,5 +21,5 @@ public interface ParticipantDao {
     Participant getById(final int id);
 
     @Insert
-    void insert(Participant... participants);
+    void insert(Participant participant);
 }

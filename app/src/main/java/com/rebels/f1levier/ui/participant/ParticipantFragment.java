@@ -1,8 +1,11 @@
 package com.rebels.f1levier.ui.participant;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,10 +22,19 @@ import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.viewmodel.ParticipantViewModel;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ParticipantFragment extends Fragment {
+
+    private static final int READ_DATA_FILE_REQUEST_CODE = 42;
+
+    private ParticipantViewModel participantViewModel;
 
     public ParticipantFragment() {
     }
@@ -30,6 +42,7 @@ public class ParticipantFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        participantViewModel = ViewModelProviders.of(this).get(ParticipantViewModel.class);
     }
 
     @Override
@@ -43,7 +56,6 @@ public class ParticipantFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        ParticipantViewModel participantViewModel = ViewModelProviders.of(this).get(ParticipantViewModel.class);
         participantViewModel.getAllParticipants().observe(this,
                 new Observer<List<Participant>>() {
             @Override
@@ -65,6 +77,57 @@ public class ParticipantFragment extends Fragment {
             }
         });
 
+        FloatingActionButton importFab = view.findViewById(R.id.fab_import);
+        importFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("text/*");
+                startActivityForResult(intent, READ_DATA_FILE_REQUEST_CODE);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if (requestCode == READ_DATA_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (resultData != null) {
+                proceedImportFromFileUri(resultData.getData());
+            }
+        }
+    }
+
+    private void proceedImportFromFileUri(Uri uri) {
+        for (String line : readTextLinesFromUri(uri)) {
+            String[] lineData = line.split(" ");
+            // Insert 0 as echelon when integer conversion does not work
+            try {
+                participantViewModel.insert(new Participant(lineData[0], Integer.valueOf(lineData[1])));
+            }
+            catch (NumberFormatException e) {
+                participantViewModel.insert(new Participant(lineData[0], 0));
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @NonNull
+    private ArrayList<String> readTextLinesFromUri(Uri uri) {
+        ArrayList<String> lines= new ArrayList<>();
+        try {
+            InputStream inputStream = Objects.requireNonNull(getContext()).getContentResolver().openInputStream(uri);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
 }

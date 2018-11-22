@@ -16,4 +16,12 @@ public class Participant {
 
     @NonNull
     public int echelon;
+
+    public Participant() {
+    }
+
+    public Participant(@NonNull String name, @NonNull int echelon) {
+        this.name = name;
+        this.echelon = echelon;
+    }
 }

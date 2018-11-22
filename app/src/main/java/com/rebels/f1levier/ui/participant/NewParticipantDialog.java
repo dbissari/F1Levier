@@ -63,9 +63,9 @@ public class NewParticipantDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Participant participant = new Participant();
-                        participant.name = nameEditText.getText().toString().trim();
-                        participant.echelon = echelonSeekBar.getProgress();
+                        Participant participant = new Participant(
+                                nameEditText.getText().toString().trim(),
+                                echelonSeekBar.getProgress());
 
                         // TODO : Validate form
 
