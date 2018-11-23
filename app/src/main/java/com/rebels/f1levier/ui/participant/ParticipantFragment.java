@@ -33,6 +33,7 @@ import java.util.Objects;
 public class ParticipantFragment extends Fragment {
 
     private static final int READ_DATA_FILE_REQUEST_CODE = 42;
+    private static final String NEW_PARTICIPANT_DIALOG_CODE = "new_participant";
 
     private ParticipantViewModel participantViewModel;
 
@@ -73,7 +74,8 @@ public class ParticipantFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NewParticipantDialog newParticipantDialog = new NewParticipantDialog();
-                newParticipantDialog.show(Objects.requireNonNull(getFragmentManager()), null);
+                newParticipantDialog.show(Objects.requireNonNull(getFragmentManager()),
+                        NEW_PARTICIPANT_DIALOG_CODE);
             }
         });
 
@@ -105,7 +107,8 @@ public class ParticipantFragment extends Fragment {
             String[] lineData = line.split(" ");
             // Insert 0 as echelon when integer conversion does not work
             try {
-                participantViewModel.insert(new Participant(lineData[0], Integer.valueOf(lineData[1])));
+                participantViewModel.insert(new Participant(lineData[0],
+                        Integer.valueOf(lineData[1])));
             }
             catch (NumberFormatException e) {
                 participantViewModel.insert(new Participant(lineData[0], 0));
@@ -118,8 +121,10 @@ public class ParticipantFragment extends Fragment {
     private ArrayList<String> readTextLinesFromUri(Uri uri) {
         ArrayList<String> lines= new ArrayList<>();
         try {
-            InputStream inputStream = Objects.requireNonNull(getContext()).getContentResolver().openInputStream(uri);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
+            InputStream inputStream =
+                    Objects.requireNonNull(getContext()).getContentResolver().openInputStream(uri);
+            BufferedReader reader =
+                    new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);

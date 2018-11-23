@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.ui.participant.ParticipantFragment;
+import com.rebels.f1levier.ui.race.RaceFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                     showFragment(new ParticipantFragment());
                     return true;
                 case R.id.navigation_races:
-                    //showFragment(new RaceFragment());
+                    showFragment(new RaceFragment());
                     return true;
             }
             return false;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        showFragment(new RaceFragment());
     }
 
     private void showFragment(Fragment fragment) {

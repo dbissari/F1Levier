@@ -37,4 +37,7 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycleVersion"
     /* Lifecycle */
+
+    // Circle Button Android Library
+    //implementation 'com.github.markushi:circlebutton:1.1'
 }
