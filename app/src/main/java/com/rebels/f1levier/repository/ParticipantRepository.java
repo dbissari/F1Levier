@@ -26,7 +26,7 @@ public class ParticipantRepository {
         return mAllParticipants;
     }
 
-    public void insert(Participant participant) {
+    public void insertAsync(Participant participant) {
         new insertAsyncTask(mParticipantDao).execute(participant);
     }
 

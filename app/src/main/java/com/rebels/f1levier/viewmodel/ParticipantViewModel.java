@@ -25,7 +25,7 @@ public class ParticipantViewModel extends AndroidViewModel {
         return mAllParticipants;
     }
 
-    public void insert(Participant participant) {
-        mRepository.insert(participant);
+    public void insertAsync(Participant participant) {
+        mRepository.insertAsync(participant);
     }
 }

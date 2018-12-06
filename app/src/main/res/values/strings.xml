@@ -7,7 +7,5 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="title_races">Races</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="race_name">Name</string>
 </resources>

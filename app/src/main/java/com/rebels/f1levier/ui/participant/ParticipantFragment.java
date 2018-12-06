@@ -107,11 +107,11 @@ public class ParticipantFragment extends Fragment {
             String[] lineData = line.split(" ");
             // Insert 0 as echelon when integer conversion does not work
             try {
-                participantViewModel.insert(new Participant(lineData[0],
+                participantViewModel.insertAsync(new Participant(lineData[0],
                         Integer.valueOf(lineData[1])));
             }
             catch (NumberFormatException e) {
-                participantViewModel.insert(new Participant(lineData[0], 0));
+                participantViewModel.insertAsync(new Participant(lineData[0], 0));
                 e.printStackTrace();
             }
         }

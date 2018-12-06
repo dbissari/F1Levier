@@ -8,6 +8,47 @@
     android:name="com.rebels.f1levier.ui.race.RaceFragment"
     tools:context=".ui.race.RaceFragment">
 
+    <at.markushi.ui.CircleButton
+        android:layout_width="220dip"
+        android:layout_height="220dip"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:id="@+id/button_new_race"
+        android:src="@drawable/ic_timer_white_180dp"
+        app:cb_color="@color/colorPrimary"
+        app:cb_pressedRingWidth="10dip" />
 
+    <View
+        android:id="@+id/divider_top"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/button_new_race"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/text_view_races"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider_top"
+        android:layout_marginStart="@dimen/text_margin"
+        android:text="@string/title_races"
+        android:textAppearance="@android:style/TextAppearance.Material.Caption"
+        android:textStyle="bold|italic" />
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/text_view_races"
+        android:background="?android:attr/listDivider" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/race_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/divider_bottom"
+        android:layout_alignParentBottom="true"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:listitem="@layout/fragment_race_list_row" />
 
 </RelativeLayout>

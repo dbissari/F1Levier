@@ -15,7 +15,7 @@ import android.arch.persistence.room.ForeignKey;
                         parentColumns = "id",
                         childColumns = "member_id")
         })
-public class TeamMemberJoinEntity {
+public class TeamMemberJoin {
 
     @ColumnInfo(name="team_id")
     public final int teamId;
@@ -23,7 +23,7 @@ public class TeamMemberJoinEntity {
     @ColumnInfo(name="member_id")
     public final int memberId;
 
-    public TeamMemberJoinEntity(final int teamId, final int memberId) {
+    public TeamMemberJoin(final int teamId, final int memberId) {
         this.teamId = teamId;
         this.memberId = memberId;
     }

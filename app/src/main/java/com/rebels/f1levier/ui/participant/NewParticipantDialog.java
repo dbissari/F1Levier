@@ -69,7 +69,7 @@ public class NewParticipantDialog extends AppCompatDialogFragment {
 
                         // TODO : Validate form
 
-                        participantViewModel.insert(participant);
+                        participantViewModel.insertAsync(participant);
                     }
                 });
 
