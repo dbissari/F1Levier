@@ -14,15 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.db.entity.Team;
+import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
 import com.rebels.f1levier.viewmodel.TeamViewModel;
 
 import java.util.List;
 import java.util.Objects;
 
-public class TeamActivity extends AppCompatActivity {
+public class TeamActivity extends AppCompatActivity implements TeamListAdapter.InteractionListener {
 
     private static final String NEW_TEAM_DIALOG_CODE = "new_team";
+
+    static final String TEAM_MEMBER_DIALOG_CODE = "team_member";
 
     private int raceId;
     private TeamViewModel teamViewModel;
@@ -40,14 +42,14 @@ public class TeamActivity extends AppCompatActivity {
         teamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
 
         RecyclerView recyclerView = findViewById(R.id.team_list);
-        final TeamListAdapter adapter = new TeamListAdapter();
+        final TeamListAdapter adapter = new TeamListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        teamViewModel.getTeamsByRaceId(raceId).observe(this,
-                new Observer<List<Team>>() {
+        teamViewModel.getAllDetailedTeamsByRaceId(raceId).observe(this,
+                new Observer<List<TeamDetail>>() {
                     @Override
-                    public void onChanged(@Nullable final List<Team> teams) {
+                    public void onChanged(@Nullable final List<TeamDetail> teams) {
                         adapter.setTeams(teams);
                     }
                 });
@@ -79,5 +81,11 @@ public class TeamActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onTeamItemClicked(TeamDetail team) {
+        TeamMemberDialog teamMemberDialog = TeamMemberDialog.newInstance(raceId, team.id);
+        teamMemberDialog.show(getSupportFragmentManager(), TEAM_MEMBER_DIALOG_CODE);
     }
 }

@@ -3,11 +3,11 @@ package com.rebels.f1levier.ui.team;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +31,6 @@ public class NewTeamDialog extends AppCompatDialogFragment {
     public NewTeamDialog() {
     }
 
-    @SuppressWarnings("unused")
     public static NewTeamDialog newInstance(int raceId) {
         NewTeamDialog fragment = new NewTeamDialog();
         Bundle args = new Bundle();
@@ -81,7 +80,7 @@ public class NewTeamDialog extends AppCompatDialogFragment {
                         // TODO : Validate form
 
                         TeamInsertAsyncTack asyncTack = new TeamInsertAsyncTack(teamViewModel,
-                                getContext());
+                                raceId, getFragmentManager());
                         asyncTack.execute(team);
                     }
                 });
@@ -92,12 +91,13 @@ public class NewTeamDialog extends AppCompatDialogFragment {
     private static class TeamInsertAsyncTack extends AsyncTask<Team, Void, Long> {
 
         private TeamViewModel teamViewModel;
+        private int raceId;
+        private WeakReference<FragmentManager> fragmentManagerWeakReference;
 
-        private WeakReference<Context> contextWeakReference;
-
-        TeamInsertAsyncTack(TeamViewModel teamViewModel, Context context) {
+        TeamInsertAsyncTack(TeamViewModel teamViewModel, int raceId, FragmentManager fragmentManager) {
             this.teamViewModel = teamViewModel;
-            this.contextWeakReference = new WeakReference<>(context);
+            this.raceId = raceId;
+            this.fragmentManagerWeakReference = new WeakReference<>(fragmentManager);
         }
 
         @Override
@@ -107,9 +107,10 @@ public class NewTeamDialog extends AppCompatDialogFragment {
 
         @Override
         protected void onPostExecute(Long id) {
-            Context context = contextWeakReference.get();
-            if (context != null) {
-                // TODO : Start a new team members selection dialog
+            FragmentManager fragmentManager = fragmentManagerWeakReference.get();
+            if (fragmentManager != null) {
+                TeamMemberDialog teamMemberDialog = TeamMemberDialog.newInstance(raceId, id.intValue());
+                teamMemberDialog.show(fragmentManager, TeamActivity.TEAM_MEMBER_DIALOG_CODE);
             }
             else {
                 // TODO : Find a way to resolve the context reference lost problem

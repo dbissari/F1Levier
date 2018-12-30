@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rebels.f1levier.R;
+import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
 import com.rebels.f1levier.db.entity.Team;
 
 import java.util.Collections;
@@ -15,9 +16,12 @@ import java.util.List;
 
 public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHolder> {
 
-    private List<Team> mTeams = Collections.emptyList();
+    private List<TeamDetail> mTeams = Collections.emptyList();
 
-    TeamListAdapter() {
+    private InteractionListener mListener;
+
+    TeamListAdapter(InteractionListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -30,12 +34,19 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final Team currentTeam = mTeams.get(position);
+        final TeamDetail currentTeam = mTeams.get(position);
         holder.nameTextView.setText(currentTeam.name);
-        //holder.membersCountTextView.setText(String.valueOf(count));
+        holder.membersCountTextView.setText(String.valueOf(currentTeam.membersCount)+ " : " + String.valueOf(currentTeam.echelonsSum));
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null)
+                    mListener.onTeamItemClicked(currentTeam);
+            }
+        });
     }
 
-    void setTeams(List<Team> teams) {
+    void setTeams(List<TeamDetail> teams) {
         mTeams = teams;
         notifyDataSetChanged();
     }
@@ -46,13 +57,19 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        private final View mView;
         private final TextView nameTextView;
-        //private final TextView membersCountTextView;
+        private final TextView membersCountTextView;
 
         private ViewHolder(View view) {
             super(view);
+            mView = view;
             nameTextView = view.findViewById(R.id.text_view_team_name);
-            //membersCountTextView = view.findViewById(R.id.text_view_members_count);
+            membersCountTextView = view.findViewById(R.id.text_view_team_member_count);
         }
+    }
+
+    public interface InteractionListener {
+        void onTeamItemClicked(TeamDetail team);
     }
 }
