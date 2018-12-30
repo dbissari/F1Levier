@@ -22,5 +22,5 @@ public interface RaceDao {
     LiveData<List<Race>> getAllStarted();
 
     @Insert
-    long insert(Race race);
+    Long insert(Race race);
 }

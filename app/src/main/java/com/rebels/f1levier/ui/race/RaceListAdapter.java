@@ -17,7 +17,10 @@ public class RaceListAdapter extends RecyclerView.Adapter<RaceListAdapter.ViewHo
 
     private List<Race> mRaces = Collections.emptyList();
 
-    RaceListAdapter() {
+    private InteractionListener mListener;
+
+    RaceListAdapter(InteractionListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -32,6 +35,13 @@ public class RaceListAdapter extends RecyclerView.Adapter<RaceListAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Race currentRace = mRaces.get(position);
         holder.nameTextView.setText(currentRace.name);
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null)
+                    mListener.onRaceItemClicked(currentRace);
+            }
+        });
     }
 
     void setRaces(List<Race> races) {
@@ -46,10 +56,16 @@ public class RaceListAdapter extends RecyclerView.Adapter<RaceListAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
+        private final View mView;
 
         private ViewHolder(View view) {
             super(view);
+            mView = view;
             nameTextView = view.findViewById(R.id.text_view_race_name);
         }
+    }
+
+    public interface InteractionListener {
+        void onRaceItemClicked(Race race);
     }
 }

@@ -1,11 +1,10 @@
-package com.rebels.f1levier.ui.race;
+package com.rebels.f1levier.ui.team;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,16 +14,44 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.rebels.f1levier.R;
-import com.rebels.f1levier.db.entity.Race;
-import com.rebels.f1levier.ui.team.TeamActivity;
-import com.rebels.f1levier.viewmodel.RaceViewModel;
+import com.rebels.f1levier.db.entity.Team;
+import com.rebels.f1levier.viewmodel.TeamViewModel;
 
 import java.lang.ref.WeakReference;
 import java.util.Objects;
 
-public class NewRaceDialog extends AppCompatDialogFragment {
+public class NewTeamDialog extends AppCompatDialogFragment {
+
+    private static final String ARG_RACE_ID = "race-id";
+
     private EditText nameEditText;
-    private RaceViewModel raceViewModel;
+    private TeamViewModel teamViewModel;
+    private int raceId = -1;
+
+    public NewTeamDialog() {
+    }
+
+    @SuppressWarnings("unused")
+    public static NewTeamDialog newInstance(int raceId) {
+        NewTeamDialog fragment = new NewTeamDialog();
+        Bundle args = new Bundle();
+        args.putInt(ARG_RACE_ID, raceId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            raceId = getArguments().getInt(ARG_RACE_ID);
+        }
+
+        if (raceId == -1) {
+            dismiss();
+        }
+    }
 
     @NonNull
     @Override
@@ -32,14 +59,14 @@ public class NewRaceDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_new_race, null);
+        View view = inflater.inflate(R.layout.dialog_new_team, null);
 
-        nameEditText = view.findViewById(R.id.edit_text_race_name);
+        nameEditText = view.findViewById(R.id.edit_text_team_name);
 
-        raceViewModel = ViewModelProviders.of(this).get(RaceViewModel.class);
+        teamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
 
         builder.setView(view)
-                .setTitle(R.string.title_new_race)
+                .setTitle(R.string.title_new_team)
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -49,42 +76,40 @@ public class NewRaceDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Race race = new Race(nameEditText.getText().toString().trim());
+                        Team team = new Team(nameEditText.getText().toString().trim(), raceId);
 
                         // TODO : Validate form
 
-                        RaceInsertAsyncTack asyncTask = new RaceInsertAsyncTack(raceViewModel,
+                        TeamInsertAsyncTack asyncTack = new TeamInsertAsyncTack(teamViewModel,
                                 getContext());
-                        asyncTask.execute(race);
+                        asyncTack.execute(team);
                     }
                 });
 
         return builder.create();
     }
 
-    private static class RaceInsertAsyncTack extends AsyncTask<Race, Void, Long> {
+    private static class TeamInsertAsyncTack extends AsyncTask<Team, Void, Long> {
 
-        private RaceViewModel raceViewModel;
+        private TeamViewModel teamViewModel;
 
         private WeakReference<Context> contextWeakReference;
 
-        RaceInsertAsyncTack(RaceViewModel raceViewModel, Context context) {
-            this.raceViewModel = raceViewModel;
+        TeamInsertAsyncTack(TeamViewModel teamViewModel, Context context) {
+            this.teamViewModel = teamViewModel;
             this.contextWeakReference = new WeakReference<>(context);
         }
 
         @Override
-        protected Long doInBackground(Race... params) {
-            return raceViewModel.insertSync(params[0]);
+        protected Long doInBackground(Team... params) {
+            return teamViewModel.insertSync(params[0]);
         }
 
         @Override
         protected void onPostExecute(Long id) {
             Context context = contextWeakReference.get();
             if (context != null) {
-                Intent teamIntent = new Intent(context, TeamActivity.class);
-                teamIntent.putExtra("race_id", id);
-                context.startActivity(teamIntent);
+                // TODO : Start a new team members selection dialog
             }
             else {
                 // TODO : Find a way to resolve the context reference lost problem

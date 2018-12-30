@@ -3,6 +3,7 @@ package com.rebels.f1levier.ui.race;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.entity.Race;
+import com.rebels.f1levier.ui.team.TeamActivity;
 import com.rebels.f1levier.viewmodel.RaceViewModel;
 
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.Objects;
 
 import at.markushi.ui.CircleButton;
 
-public class RaceFragment extends Fragment {
+public class RaceFragment extends Fragment implements RaceListAdapter.InteractionListener {
 
     private static final String NEW_RACE_DIALOG_CODE = "new_race";
 
@@ -45,7 +47,7 @@ public class RaceFragment extends Fragment {
 
         Context context = view.getContext();
         RecyclerView recyclerView = view.findViewById(R.id.race_list);
-        final RaceListAdapter adapter = new RaceListAdapter();
+        final RaceListAdapter adapter = new RaceListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -73,5 +75,13 @@ public class RaceFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onRaceItemClicked(Race race) {
+        Context context = Objects.requireNonNull(getContext());
+        Intent teamIntent = new Intent(context, TeamActivity.class);
+        teamIntent.putExtra("race_id", race.id);
+        context.startActivity(teamIntent);
     }
 }

@@ -32,7 +32,7 @@ public class RaceRepository {
         return mNotStartedRaces;
     }
 
-    public long insertSync(Race race) {
+    public Long insertSync(Race race) {
         return mRaceDao.insert(race);
     }
 }

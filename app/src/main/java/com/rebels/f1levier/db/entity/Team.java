@@ -22,4 +22,9 @@ public class Team {
     @NonNull
     @ColumnInfo(name="race_id")
     public int raceId;
+
+    public Team(@NonNull String name, @NonNull int raceId) {
+        this.name = name;
+        this.raceId = raceId;
+    }
 }

@@ -32,7 +32,7 @@ public class RaceViewModel extends AndroidViewModel {
         return mNotStartedRaces;
     }
 
-    public long insertSync(Race race) {
+    public Long insertSync(Race race) {
         return mRaceRepository.insertSync(race);
     }
 }

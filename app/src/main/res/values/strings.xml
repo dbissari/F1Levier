@@ -8,4 +8,8 @@
     <string name="submit">Submit</string>
     <string name="title_races">Races</string>
     <string name="race_name">Name</string>
+    <string name="title_activity_team">TeamActivity</string>
+    <string name="title_new_team">New team</string>
+    <string name="title_new_race">New race</string>
+    <string name="team_name">Name</string>
 </resources>
