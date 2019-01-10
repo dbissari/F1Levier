@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
-import com.rebels.f1levier.db.entity.Team;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +35,10 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final TeamDetail currentTeam = mTeams.get(position);
         holder.nameTextView.setText(currentTeam.name);
-        holder.membersCountTextView.setText(String.valueOf(currentTeam.membersCount)+ " : " + String.valueOf(currentTeam.echelonsSum));
+        holder.membersCountTextView.setText(
+                holder.mView.getContext().getResources().getString(
+                        R.string.team_members_count_and_echelon, currentTeam.membersCount,
+                        currentTeam.echelonsSum));
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

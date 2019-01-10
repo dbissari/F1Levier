@@ -2,6 +2,7 @@ package com.rebels.f1levier.ui.team;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.view.View;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
+import com.rebels.f1levier.ui.runningrace.RunningRaceActivity;
 import com.rebels.f1levier.viewmodel.TeamViewModel;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
 
     static final String TEAM_MEMBER_DIALOG_CODE = "team_member";
 
+    public static final String EXTRA_RACE_ID = "race_id";
+
     private int raceId;
     private TeamViewModel teamViewModel;
 
@@ -34,7 +38,7 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
 
-        raceId = getIntent().getIntExtra("race_id", -1);
+        raceId = getIntent().getIntExtra(EXTRA_RACE_ID, -1);
         if (raceId == -1) {
             finish();
         }
@@ -62,7 +66,15 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
         nextFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO : go to next activity (do not forget to pass race id param)
+                // TODO : check team constraints and show dialog if not valid
+                if (false) {
+                    // show dialog
+                }
+                else {
+                    Intent runningRaceIntent = new Intent(TeamActivity.this, RunningRaceActivity.class);
+                    runningRaceIntent.putExtra(RunningRaceActivity.EXTRA_RACE_ID, raceId);
+                    startActivity(runningRaceIntent);
+                }
             }
         });
     }

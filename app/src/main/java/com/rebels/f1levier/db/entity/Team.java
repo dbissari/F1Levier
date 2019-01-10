@@ -16,14 +16,12 @@ public class Team {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @NonNull
     public String name;
 
-    @NonNull
     @ColumnInfo(name="race_id")
     public int raceId;
 
-    public Team(@NonNull String name, @NonNull int raceId) {
+    public Team(String name, int raceId) {
         this.name = name;
         this.raceId = raceId;
     }

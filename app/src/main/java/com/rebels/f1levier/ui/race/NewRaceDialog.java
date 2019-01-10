@@ -53,7 +53,7 @@ public class NewRaceDialog extends AppCompatDialogFragment {
 
                         // TODO : Validate form
 
-                        RaceInsertAsyncTack asyncTask = new RaceInsertAsyncTack(raceViewModel,
+                        RaceInsertAsyncTask asyncTask = new RaceInsertAsyncTask(raceViewModel,
                                 getContext());
                         asyncTask.execute(race);
                     }
@@ -62,13 +62,13 @@ public class NewRaceDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    private static class RaceInsertAsyncTack extends AsyncTask<Race, Void, Long> {
+    private static class RaceInsertAsyncTask extends AsyncTask<Race, Void, Long> {
 
         private RaceViewModel raceViewModel;
 
         private WeakReference<Context> contextWeakReference;
 
-        RaceInsertAsyncTack(RaceViewModel raceViewModel, Context context) {
+        RaceInsertAsyncTask(RaceViewModel raceViewModel, Context context) {
             this.raceViewModel = raceViewModel;
             this.contextWeakReference = new WeakReference<>(context);
         }
@@ -83,7 +83,7 @@ public class NewRaceDialog extends AppCompatDialogFragment {
             Context context = contextWeakReference.get();
             if (context != null) {
                 Intent teamIntent = new Intent(context, TeamActivity.class);
-                teamIntent.putExtra("race_id", id);
+                teamIntent.putExtra(TeamActivity.EXTRA_RACE_ID, id.intValue());
                 context.startActivity(teamIntent);
             }
             else {

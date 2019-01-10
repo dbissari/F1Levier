@@ -13,23 +13,23 @@ public class RaceViewModel extends AndroidViewModel {
 
     private RaceRepository mRaceRepository;
 
-    private LiveData<List<Race>> mStartedRaces;
-
     private LiveData<List<Race>> mNotStartedRaces;
+
+    private LiveData<List<Race>> mFinishedRaces;
 
     public RaceViewModel(Application application) {
         super(application);
         mRaceRepository = new RaceRepository(application);
-        mStartedRaces = mRaceRepository.getStartedRaces();
         mNotStartedRaces = mRaceRepository.getNotStartedRaces();
-    }
-
-    public LiveData<List<Race>> getStartedRaces() {
-        return mStartedRaces;
+        mFinishedRaces = mRaceRepository.getFinishedRaces();
     }
 
     public LiveData<List<Race>> getNotStartedRaces() {
         return mNotStartedRaces;
+    }
+
+    public LiveData<List<Race>> getFinishedRaces() {
+        return mFinishedRaces;
     }
 
     public Long insertSync(Race race) {

@@ -46,22 +46,43 @@ public class RaceFragment extends Fragment implements RaceListAdapter.Interactio
         View view = inflater.inflate(R.layout.fragment_race_list, container, false);
 
         Context context = view.getContext();
-        RecyclerView recyclerView = view.findViewById(R.id.race_list);
-        final RaceListAdapter adapter = new RaceListAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+
+        RecyclerView notStartedRecyclerView = view.findViewById(R.id.not_started_races_list);
+        final RaceListAdapter notStartedAdapter = new RaceListAdapter(this);
+        notStartedRecyclerView.setAdapter(notStartedAdapter);
+        notStartedRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         raceViewModel.getNotStartedRaces().observe(this,
                 new Observer<List<Race>>() {
                     @Override
                     public void onChanged(@Nullable final List<Race> races) {
-                        adapter.setRaces(races);
+                        notStartedAdapter.setRaces(races);
                     }
                 });
 
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(context,
+        DividerItemDecoration notStartedItemDecoration = new DividerItemDecoration(context,
                 DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
+        notStartedRecyclerView.addItemDecoration(notStartedItemDecoration);
+
+
+        RecyclerView finishedRecyclerView = view.findViewById(R.id.finished_races_list);
+        final RaceListAdapter finishedAdapter = new RaceListAdapter(this);
+        finishedRecyclerView.setAdapter(finishedAdapter);
+        finishedRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        raceViewModel.getFinishedRaces().observe(this,
+                new Observer<List<Race>>() {
+                    @Override
+                    public void onChanged(@Nullable final List<Race> races) {
+                        finishedAdapter.setRaces(races);
+                    }
+                });
+
+        DividerItemDecoration finishedItemDecoration = new DividerItemDecoration(context,
+                DividerItemDecoration.VERTICAL);
+        finishedRecyclerView.addItemDecoration(finishedItemDecoration);
+
 
         // Set the new race circle button listener
         CircleButton circleButtonNewRace = view.findViewById(R.id.button_new_race);
@@ -80,8 +101,15 @@ public class RaceFragment extends Fragment implements RaceListAdapter.Interactio
     @Override
     public void onRaceItemClicked(Race race) {
         Context context = Objects.requireNonNull(getContext());
-        Intent teamIntent = new Intent(context, TeamActivity.class);
-        teamIntent.putExtra("race_id", race.id);
-        context.startActivity(teamIntent);
+
+        if (race.startedAt == null) {
+            Intent teamIntent = new Intent(context, TeamActivity.class);
+            teamIntent.putExtra(TeamActivity.EXTRA_RACE_ID, race.id);
+            context.startActivity(teamIntent);
+        }
+
+        if (race.finishedAt != null) {
+            // TODO : Display stats
+        }
     }
 }

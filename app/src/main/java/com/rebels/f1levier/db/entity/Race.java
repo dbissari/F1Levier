@@ -24,9 +24,13 @@ public class Race {
     @ColumnInfo(name="started_at")
     public Date startedAt;
 
+    @ColumnInfo(name="finished_at")
+    public Date finishedAt;
+
     public Race(@NonNull String name) {
         this.name = name;
         this.createdAt = new Date();
         this.startedAt = null;
+        this.finishedAt = null;
     }
 }

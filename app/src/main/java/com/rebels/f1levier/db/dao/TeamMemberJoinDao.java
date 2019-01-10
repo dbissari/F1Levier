@@ -7,6 +7,7 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
+import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
 import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.db.entity.TeamMemberJoin;
 
@@ -15,9 +16,8 @@ import java.util.List;
 @Dao
 public interface TeamMemberJoinDao {
 
-    @Query("SELECT Participant.* FROM Participant INNER JOIN team_member ON " +
-            "Participant.id = team_member.member_id WHERE team_member.team_id = :teamId")
-    List<Participant> getMembersByTeamId(final int teamId);
+    @Query("SELECT * FROM Team  WHERE race_id = :raceId ORDER BY name")
+    List<TeamNameAndMemberIds> getTeamNamesAndMemberIds(final int raceId);
 
     @Query("SELECT Participant.*, 1 AS picked FROM Participant INNER JOIN team_member ON " +
             "Participant.id = team_member.member_id WHERE team_member.team_id = :teamId " +

@@ -13,21 +13,11 @@ public class Participant {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    @NonNull
     public String name;
 
-    @NonNull
     public int echelon;
 
-    @ColumnInfo(name="picked")
-    @Ignore
-    public boolean picked;
-
-    @Ignore
-    public Participant() {
-    }
-
-    public Participant(@NonNull String name, @NonNull int echelon) {
+    public Participant(@NonNull String name, int echelon) {
         this.name = name;
         this.echelon = echelon;
     }

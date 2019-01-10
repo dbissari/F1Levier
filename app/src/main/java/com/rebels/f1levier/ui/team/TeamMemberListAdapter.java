@@ -2,11 +2,13 @@ package com.rebels.f1levier.ui.team;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
@@ -19,6 +21,8 @@ public class TeamMemberListAdapter extends RecyclerView.Adapter<TeamMemberListAd
     private List<TeamMember> mMembers = Collections.emptyList();
 
     private InteractionListener mListener;
+
+    private int pickedMembersCount = 0;
 
     TeamMemberListAdapter(InteractionListener listener) {
         mListener = listener;
@@ -38,22 +42,35 @@ public class TeamMemberListAdapter extends RecyclerView.Adapter<TeamMemberListAd
         holder.nameTextView.setText(currentMember.name);
         holder.echelonTextView.setText(String.valueOf(currentMember.echelon));
         holder.checkBox.setChecked(currentMember.picked);
+        if (currentMember.picked) pickedMembersCount++;
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onMemberItemClicked(currentMember);
+                if (pickedMembersCount < 3 || currentMember.picked) {
+                    if (mListener != null) {
+                        mListener.onMemberItemClicked(currentMember);
+                        if (currentMember.picked) pickedMembersCount--;
+                    }
+                }
+                else {
+                    Toast alert = Toast.makeText(holder.mView.getContext(),
+                            R.string.toat_team_member_limit_reached, Toast.LENGTH_SHORT);
+                    alert.show();
                 }
             }
-        };
-
-        holder.mView.setOnClickListener(clickListener);
-        holder.checkBox.setOnClickListener(clickListener);
+        });
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.checkBox.callOnClick();
+            }
+        });
     }
 
     void setMembers(List<TeamMember> participants) {
         mMembers = participants;
+        pickedMembersCount = 0;
         notifyDataSetChanged();
     }
 

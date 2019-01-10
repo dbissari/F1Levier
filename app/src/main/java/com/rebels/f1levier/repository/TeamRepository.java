@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.rebels.f1levier.db.AppDatabase;
 import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
+import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
 import com.rebels.f1levier.db.dao.TeamDao;
 import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
 import com.rebels.f1levier.db.dao.TeamMemberJoinDao;
@@ -31,6 +32,10 @@ public class TeamRepository {
 
     public LiveData<List<TeamMember>> getOtherMembersNotPickedByRaceId(int teamId, int raceId) {
         return mTeamMemberJoinDao.getOtherMembersNotPickedByRaceId(teamId, raceId);
+    }
+
+    public  List<TeamNameAndMemberIds> getTeamNamesAndMemberIds(int raceId) {
+        return mTeamMemberJoinDao.getTeamNamesAndMemberIds(raceId);
     }
 
     public Long insertSync(Team team) {

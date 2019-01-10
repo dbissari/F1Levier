@@ -79,7 +79,7 @@ public class NewTeamDialog extends AppCompatDialogFragment {
 
                         // TODO : Validate form
 
-                        TeamInsertAsyncTack asyncTack = new TeamInsertAsyncTack(teamViewModel,
+                        TeamInsertAsyncTask asyncTack = new TeamInsertAsyncTask(teamViewModel,
                                 raceId, getFragmentManager());
                         asyncTack.execute(team);
                     }
@@ -88,13 +88,13 @@ public class NewTeamDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    private static class TeamInsertAsyncTack extends AsyncTask<Team, Void, Long> {
+    private static class TeamInsertAsyncTask extends AsyncTask<Team, Void, Long> {
 
         private TeamViewModel teamViewModel;
         private int raceId;
         private WeakReference<FragmentManager> fragmentManagerWeakReference;
 
-        TeamInsertAsyncTack(TeamViewModel teamViewModel, int raceId, FragmentManager fragmentManager) {
+        TeamInsertAsyncTask(TeamViewModel teamViewModel, int raceId, FragmentManager fragmentManager) {
             this.teamViewModel = teamViewModel;
             this.raceId = raceId;
             this.fragmentManagerWeakReference = new WeakReference<>(fragmentManager);

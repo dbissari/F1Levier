@@ -9,46 +9,103 @@
     tools:context=".ui.race.RaceFragment">
 
     <at.markushi.ui.CircleButton
-        android:layout_width="220dip"
-        android:layout_height="220dip"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:id="@+id/button_new_race"
-        android:src="@drawable/ic_timer_white_180dp"
+        android:src="@drawable/ic_timer_white_50dp"
         app:cb_color="@color/colorPrimary"
-        app:cb_pressedRingWidth="10dip" />
+        app:cb_pressedRingWidth="5dip" />
 
-    <View
-        android:id="@+id/divider_top"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/button_new_race"
-        android:background="?android:attr/listDivider" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/button_new_race">
 
-    <TextView
-        android:id="@+id/text_view_races"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/divider_top"
-        android:layout_marginStart="@dimen/text_margin"
-        android:text="@string/title_races"
-        android:textAppearance="@android:style/TextAppearance.Material.Caption"
-        android:textStyle="bold|italic" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50">
 
-    <View
-        android:id="@+id/divider_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/text_view_races"
-        android:background="?android:attr/listDivider" />
+            <View
+                android:id="@+id/divider_top_not_started_races"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentTop="true"
+                android:background="?android:attr/listDivider" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/race_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/divider_bottom"
-        android:layout_alignParentBottom="true"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        tools:listitem="@layout/fragment_race_list_row" />
+            <TextView
+                android:id="@+id/text_view_not_started_races"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider_top_not_started_races"
+                android:layout_marginStart="@dimen/text_margin"
+                android:text="@string/title_not_started_races"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textStyle="bold|italic" />
+
+            <View
+                android:id="@+id/divider_bottom_not_started_races"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/text_view_not_started_races"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/not_started_races_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/divider_bottom_not_started_races"
+                android:layout_alignParentBottom="true"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/fragment_race_list_row" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="50">
+
+            <View
+                android:id="@+id/divider_top_started_races"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentTop="true"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/text_view_started_races"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider_top_started_races"
+                android:layout_marginStart="@dimen/text_margin"
+                android:text="@string/title_finished_races"
+                android:textAppearance="@android:style/TextAppearance.Material.Caption"
+                android:textStyle="bold|italic" />
+
+            <View
+                android:id="@+id/divider_bottom_started_races"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/text_view_started_races"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/finished_races_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_below="@id/divider_bottom_started_races"
+                android:layout_alignParentBottom="true"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/fragment_race_list_row" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

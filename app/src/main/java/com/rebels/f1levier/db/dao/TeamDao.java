@@ -13,7 +13,7 @@ import java.util.List;
 @Dao
 public interface TeamDao {
 
-    @Query("SELECT * FROM Team WHERE race_id = :raceId")
+    @Query("SELECT * FROM Team WHERE race_id = :raceId ORDER BY name")
     LiveData<List<Team>> getAllByRaceId(final int raceId);
 
     @Query("SELECT Team.*, COUNT(Participant.id) AS membersCount, " +
@@ -21,7 +21,8 @@ public interface TeamDao {
             "LEFT JOIN team_member ON Team.id = team_member.team_id " +
             "LEFT JOIN Participant ON Participant.id = team_member.member_id " +
             "WHERE Team.race_id = :raceId " +
-            "GROUP BY Team.id")
+            "GROUP BY Team.id " +
+            "ORDER BY Team.name")
     LiveData<List<TeamDetail>> getAllDetailedByRaceId(final int raceId);
 
     @Insert

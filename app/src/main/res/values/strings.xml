@@ -8,10 +8,20 @@
     <string name="submit">Submit</string>
     <string name="title_races">Races</string>
     <string name="race_name">Name</string>
-    <string name="title_activity_team">TeamActivity</string>
+    <string name="title_activity_team">Teams</string>
     <string name="title_new_team">New team</string>
     <string name="title_new_race">New race</string>
     <string name="team_name">Name</string>
     <string name="title_team_members">Team members</string>
     <string name="close">Close</string>
+    <string name="team_members_count_and_echelon">
+        <b>%1$d</b> members. Total echelons : <b>%2$d</b>
+    </string>
+    <string name="title_activity_running_race">Running race</string>
+    <string name="toat_team_member_limit_reached">Team members limit reached</string>
+    <string name="running_race_instructions">
+        Click on the time display to start the chronometer.
+    </string>
+    <string name="title_not_started_races">Not started races</string>
+    <string name="title_finished_races">Finished races</string>
 </resources>
