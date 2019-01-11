@@ -104,17 +104,24 @@ public class ParticipantFragment extends Fragment {
 
     private void proceedImportFromFileUri(Uri uri) {
         for (String line : readTextLinesFromUri(uri)) {
-            String[] lineData = line.split(" ");
+            String[] lineData = line.split("\t");
             // Insert 0 as echelon when integer conversion does not work
             try {
                 participantViewModel.insertAsync(new Participant(lineData[0],
                         Integer.valueOf(lineData[1])));
             }
             catch (NumberFormatException e) {
-                participantViewModel.insertAsync(new Participant(lineData[0], 0));
-                e.printStackTrace();
+                handleImportLineException(lineData, e);
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                handleImportLineException(lineData, e);
             }
         }
+    }
+
+    private void handleImportLineException(String [] lineData, Exception e) {
+        participantViewModel.insertAsync(new Participant(lineData[0], 0));
+        e.printStackTrace();
     }
 
     @NonNull
@@ -126,7 +133,7 @@ public class ParticipantFragment extends Fragment {
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && !line.trim().isEmpty()) {
                 lines.add(line);
             }
             inputStream.close();

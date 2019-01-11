@@ -8,7 +8,6 @@ import android.arch.persistence.room.Query;
 
 import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
 import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
-import com.rebels.f1levier.db.entity.Participant;
 import com.rebels.f1levier.db.entity.TeamMemberJoin;
 
 import java.util.List;

@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 
 import com.rebels.f1levier.db.AppDatabase;
 import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
+import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
 import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
 import com.rebels.f1levier.db.dao.TeamDao;
-import com.rebels.f1levier.db.dao.QueryResult.TeamMember;
 import com.rebels.f1levier.db.dao.TeamMemberJoinDao;
 import com.rebels.f1levier.db.entity.Team;
 import com.rebels.f1levier.db.entity.TeamMemberJoin;
