@@ -39,13 +39,7 @@ public class Chronometer implements Runnable {
             if (running) {
                 long since = System.currentTimeMillis() - startTime;
 
-                int millis = (int) (since  % 1000);
-                int seconds = (int) ((since / MILLIS_TO_SECONDS) % 60);
-                int minutes = (int) ((since / MILLIS_TO_MINUTES) % 60);
-                int hours = (int) ((since / MILLIS_TO_HOURS) % 24);
-
-                runner.updateTimerText(
-                        String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, millis));
+                runner.updateTimerText(format(since));
 
                 try {
                     Thread.sleep(50);
@@ -61,5 +55,13 @@ public class Chronometer implements Runnable {
 
     public interface ChronometerRunner {
         void updateTimerText(final String time);
+    }
+
+    public static String format(long time) {
+        int millis = (int) (time  % 1000);
+        int seconds = (int) ((time / MILLIS_TO_SECONDS) % 60);
+        int minutes = (int) ((time / MILLIS_TO_MINUTES) % 60);
+        int hours = (int) ((time / MILLIS_TO_HOURS) % 24);
+        return String.format("%02d:%02d:%02d:%03d", hours, minutes, seconds, millis);
     }
 }

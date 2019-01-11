@@ -2,6 +2,7 @@ package com.rebels.f1levier.ui.runningrace;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
 import com.rebels.f1levier.db.entity.MeasuredTime;
+import com.rebels.f1levier.ui.stats.StatsActivity;
 import com.rebels.f1levier.utils.Chronometer;
 import com.rebels.f1levier.viewmodel.RunningRaceViewModel;
 
@@ -39,13 +41,13 @@ public class RunningRaceActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_running_race);
-
         raceId = getIntent().getIntExtra(EXTRA_RACE_ID, -1);
         if (raceId == -1) {
             finish();
         }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_running_race);
 
         chronometerTextView = findViewById(R.id.text_view_chronometer);
         chronometerTextView.setOnClickListener(this);
@@ -107,7 +109,7 @@ public class RunningRaceActivity extends AppCompatActivity
     public void onRunningTeamItemClicked(TeamNameAndMemberIds team) {
         if (chronometer.isRunning() && team.currentRunner < team.memberIds.size()) {
             long clickTime = chronometer.getSince();
-            long elapsed = (clickTime - team.lastTime)/1000;
+            long elapsed = clickTime - team.lastTime;
             team.lastTime = clickTime;
 
             runningRaceViewModel.insertMeasuredTimeAsync(
@@ -136,8 +138,7 @@ public class RunningRaceActivity extends AppCompatActivity
     }
 
 
-
-    private static class FinishRaceAsyncTask extends AsyncTask<Integer, Void, Void> {
+    private static class FinishRaceAsyncTask extends AsyncTask<Integer, Void, Integer> {
 
         private RunningRaceViewModel runningRaceViewModel;
 
@@ -149,19 +150,18 @@ public class RunningRaceActivity extends AppCompatActivity
         }
 
         @Override
-        protected Void doInBackground(Integer... params) {
+        protected Integer doInBackground(Integer... params) {
             runningRaceViewModel.finishRaceSync(params[0]);
-            return null;
+            return params[0];
         }
 
         @Override
-        protected void onPostExecute(Void avoid) {
+        protected void onPostExecute(Integer raceId) {
             Context context = contextWeakReference.get();
             if (context != null) {
-                // TODO : Display stats
-//                Intent teamIntent = new Intent(context, TeamActivity.class);
-//                teamIntent.putExtra(TeamActivity.EXTRA_RACE_ID, id.intValue());
-//                context.startActivity(teamIntent);
+                Intent teamIntent = new Intent(context, StatsActivity.class);
+                teamIntent.putExtra(StatsActivity.EXTRA_RACE_ID, raceId);
+                context.startActivity(teamIntent);
             }
             else {
                 // TODO : Find a way to resolve the context reference lost problem

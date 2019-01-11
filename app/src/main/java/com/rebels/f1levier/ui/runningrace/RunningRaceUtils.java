@@ -9,7 +9,6 @@ import java.util.List;
 
 public class RunningRaceUtils {
 
-
     interface TeamGetHandler {
         void onTeamGetPostExecute(List<TeamNameAndMemberIds> teams);
     }

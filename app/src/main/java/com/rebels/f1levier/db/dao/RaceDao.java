@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
+import com.rebels.f1levier.db.dao.QueryResult.TeamStat;
 import com.rebels.f1levier.db.entity.Race;
 
 import java.util.Date;

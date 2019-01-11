@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.entity.Race;
+import com.rebels.f1levier.ui.stats.StatsActivity;
 import com.rebels.f1levier.ui.team.TeamActivity;
 import com.rebels.f1levier.viewmodel.RaceViewModel;
 
@@ -109,7 +110,9 @@ public class RaceFragment extends Fragment implements RaceListAdapter.Interactio
         }
 
         if (race.finishedAt != null) {
-            // TODO : Display stats
+            Intent teamIntent = new Intent(context, StatsActivity.class);
+            teamIntent.putExtra(StatsActivity.EXTRA_RACE_ID, race.id);
+            context.startActivity(teamIntent);
         }
     }
 }

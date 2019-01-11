@@ -15,6 +15,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,9 +27,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.runningrace.RunningRaceActivity"
-            android:parentActivityName=".ui.MainActivity"
             android:label="@string/title_activity_running_race"
+            android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.stats.StatsActivity"
+            android:label="@string/title_activity_stats"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
