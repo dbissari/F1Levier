@@ -75,13 +75,13 @@ public class NewTeamDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Team team = new Team(nameEditText.getText().toString().trim(), raceId);
+                        if (!nameEditText.getText().toString().isEmpty()) {
+                            Team team = new Team(nameEditText.getText().toString().trim(), raceId);
 
-                        // TODO : Validate form
-
-                        TeamInsertAsyncTask asyncTack = new TeamInsertAsyncTask(teamViewModel,
-                                raceId, getFragmentManager());
-                        asyncTack.execute(team);
+                            TeamInsertAsyncTask asyncTack = new TeamInsertAsyncTask(teamViewModel,
+                                    raceId, getFragmentManager());
+                            asyncTack.execute(team);
+                        }
                     }
                 });
 

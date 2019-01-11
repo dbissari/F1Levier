@@ -28,7 +28,10 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_global_stats">Global stats</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="some_teams_have_not_finished">Some team(s) have not finished</string>
+    <string name="team_member_lap_and_time">
+        %1$s Member n° %2$d : Lap %3$d Time %4$s
+    </string>
+    <string name="create_one_team_at_least">Create one team at least</string>
+    <string name="each_team_must_contain_three_members">Each team must contain 3 members</string>
 </resources>

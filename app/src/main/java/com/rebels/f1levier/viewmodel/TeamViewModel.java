@@ -40,4 +40,8 @@ public class TeamViewModel extends AndroidViewModel {
     public void deleteTeamMemberAsync(int teamId, int memberId) {
         mTeamRepository.deleteTeamMemberAsync(teamId, memberId);
     }
+
+    public int checkConstraintsSync(int raceId) {
+        return mTeamRepository.checkConstraintsSync(raceId);
+    }
 }

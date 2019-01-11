@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamNameAndMemberIds;
@@ -79,11 +80,16 @@ public class RunningRaceActivity extends AppCompatActivity
                 }
                 break;
             case R.id.fab_finish:
-                if (adapter.haveAllTeamsFinished()) {
-                    finishRace();
-                }
-                else {
-                    // TODO : Confirm finishRace
+                if (chronometer.isRunning()) {
+                    if (adapter.haveAllTeamsFinished()) {
+                        finishRace();
+                    }
+                    else {
+                        Toast toast = Toast.makeText(this,
+                                getString(R.string.some_teams_have_not_finished),
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
                 break;
         }
@@ -115,6 +121,11 @@ public class RunningRaceActivity extends AppCompatActivity
             runningRaceViewModel.insertMeasuredTimeAsync(
                     new MeasuredTime(team.memberIds.get(team.currentRunner).intValue(), raceId,
                             team.step, team.currentLapType, elapsed));
+
+            Toast toast = Toast.makeText(this, getString(R.string.team_member_lap_and_time,
+                    team.name, team.currentRunner+1, team.step,
+                    chronometer.format(elapsed)), Toast.LENGTH_SHORT);
+            toast.show();
 
             if (team.lapsQueue.size() > 0) {
                 team.currentLapType = (int) team.lapsQueue.poll();

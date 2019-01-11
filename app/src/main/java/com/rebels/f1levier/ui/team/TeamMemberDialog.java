@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,6 +73,10 @@ public class TeamMemberDialog extends AppCompatDialogFragment
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        DividerItemDecoration itemDecoration = new DividerItemDecoration(getContext(),
+                DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
+
         teamViewModel.getOtherMembersNotPickedByRaceId(teamId, raceId).observe(this,
                 new Observer<List<TeamMember>>() {
                     @Override
@@ -84,7 +89,7 @@ public class TeamMemberDialog extends AppCompatDialogFragment
 
         builder.setView(view)
                 .setTitle(R.string.title_team_members)
-                .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

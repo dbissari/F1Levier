@@ -50,6 +50,10 @@ public class TeamRepository {
         new deleteTeamMembersAsyncTask(mTeamMemberJoinDao).execute(teamId, memberId);
     }
 
+    public int checkConstraintsSync(int raceId) {
+        return mTeamDao.checkConstraints(raceId);
+    }
+
     private static class insertTeamMemberAsyncTask extends AsyncTask<TeamMemberJoin, Void, Void> {
 
         private TeamMemberJoinDao mAsyncTaskDao;

@@ -2,7 +2,9 @@ package com.rebels.f1levier.ui.team;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,15 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.rebels.f1levier.R;
 import com.rebels.f1levier.db.dao.QueryResult.TeamDetail;
 import com.rebels.f1levier.ui.runningrace.RunningRaceActivity;
 import com.rebels.f1levier.viewmodel.TeamViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,13 +40,13 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team);
-
         raceId = getIntent().getIntExtra(EXTRA_RACE_ID, -1);
         if (raceId == -1) {
             finish();
         }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_team);
 
         teamViewModel = ViewModelProviders.of(this).get(TeamViewModel.class);
 
@@ -67,14 +72,26 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
             @Override
             public void onClick(View v) {
                 // TODO : check team constraints and show dialog if not valid
-                if (false) {
+
+                if (adapter.getItemCount() == 0) {
+                    Toast toast = Toast.makeText(TeamActivity.this,
+                            getString(R.string.create_one_team_at_least), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else {
+                    new checkConstraintsAsyncTask(teamViewModel, TeamActivity.this, raceId)
+                            .execute();
+                }
+
+                /*if (false) {
                     // show dialog
                 }
                 else {
-                    Intent runningRaceIntent = new Intent(TeamActivity.this, RunningRaceActivity.class);
+                    Intent runningRaceIntent = new Intent(TeamActivity.this,
+                            RunningRaceActivity.class);
                     runningRaceIntent.putExtra(RunningRaceActivity.EXTRA_RACE_ID, raceId);
                     startActivity(runningRaceIntent);
-                }
+                }*/
             }
         });
     }
@@ -99,5 +116,48 @@ public class TeamActivity extends AppCompatActivity implements TeamListAdapter.I
     public void onTeamItemClicked(TeamDetail team) {
         TeamMemberDialog teamMemberDialog = TeamMemberDialog.newInstance(raceId, team.id);
         teamMemberDialog.show(getSupportFragmentManager(), TEAM_MEMBER_DIALOG_CODE);
+    }
+
+
+    private static class checkConstraintsAsyncTask extends AsyncTask<Void, Void, Integer> {
+
+        private TeamViewModel teamViewModel;
+
+        private WeakReference<Context> contextWeakReference;
+
+        private int raceId;
+
+        checkConstraintsAsyncTask(TeamViewModel teamViewModel, Context context, int raceId) {
+            this.teamViewModel = teamViewModel;
+            this.contextWeakReference = new WeakReference<>(context);
+            this.raceId = raceId;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            return teamViewModel.checkConstraintsSync(raceId);
+        }
+
+        @Override
+        protected void onPostExecute(Integer count) {
+            Log.d("count", String.valueOf(count));
+            Context context = contextWeakReference.get();
+            if (context != null) {
+                if (count > 0) {
+                    Toast toast = Toast.makeText(context,
+                            context.getString(R.string.each_team_must_contain_three_members),
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else {
+                    Intent runningRaceIntent = new Intent(context, RunningRaceActivity.class);
+                    runningRaceIntent.putExtra(RunningRaceActivity.EXTRA_RACE_ID, raceId);
+                    context.startActivity(runningRaceIntent);
+                }
+            }
+            else {
+                // TODO : Find a way to resolve the context reference lost problem
+            }
+        }
     }
 }

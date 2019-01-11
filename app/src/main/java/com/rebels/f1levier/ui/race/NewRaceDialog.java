@@ -49,13 +49,14 @@ public class NewRaceDialog extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.submit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Race race = new Race(nameEditText.getText().toString().trim());
+                        if (!nameEditText.getText().toString().isEmpty()) {
+                            Race race = new Race(nameEditText.getText().toString().trim());
 
-                        // TODO : Validate form
+                            RaceInsertAsyncTask asyncTask = new RaceInsertAsyncTask(raceViewModel,
+                                    getContext());
+                            asyncTask.execute(race);
+                        }
 
-                        RaceInsertAsyncTask asyncTask = new RaceInsertAsyncTask(raceViewModel,
-                                getContext());
-                        asyncTask.execute(race);
                     }
                 });
 

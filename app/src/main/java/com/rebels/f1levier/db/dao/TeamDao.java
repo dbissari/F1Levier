@@ -27,4 +27,8 @@ public interface TeamDao {
 
     @Insert
     Long insert(Team team);
+
+    @Query("SELECT COUNT(*) FROM Team LEFT JOIN team_member ON Team.id = team_member.team_id " +
+            "WHERE Team.race_id = :raceId GROUP BY Team.id HAVING COUNT(team_member.member_id) <> 3")
+    int checkConstraints(int raceId);
 }

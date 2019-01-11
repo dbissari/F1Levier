@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,8 +24,6 @@ import com.rebels.f1levier.viewmodel.RaceViewModel;
 
 import java.util.List;
 import java.util.Objects;
-
-import at.markushi.ui.CircleButton;
 
 public class RaceFragment extends Fragment implements RaceListAdapter.InteractionListener {
 
@@ -85,9 +84,8 @@ public class RaceFragment extends Fragment implements RaceListAdapter.Interactio
         finishedRecyclerView.addItemDecoration(finishedItemDecoration);
 
 
-        // Set the new race circle button listener
-        CircleButton circleButtonNewRace = view.findViewById(R.id.button_new_race);
-        circleButtonNewRace.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addFab = view.findViewById(R.id.fab_add);
+        addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 NewRaceDialog newRaceDialog = new NewRaceDialog();
